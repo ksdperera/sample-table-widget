@@ -1,0 +1,33 @@
+{
+    "name": "Sample Table",
+    "id": "SampleTable",
+    "thumbnailURL": "",
+    "configs": {
+        "pubsub": {
+            "types": [
+                "subscriber"
+            ]
+        },
+        "providerConfig": {
+            "configs":{
+                "type":"SiddhiStoreDataProvider",
+                "config":{
+                    "siddhiApp":"@App:name(\"SiddhiApp\") @store(type='rdbms', datasource='SAMPLE_DB') define table adapterRequestTable(trackingId string, instanceId string, operationName string, functionalId string, serviceName string, timestamp long, message string);",
+                    "queryData":{
+                        "query":"from adapterRequestTable select trackingId, instanceId, operationName, functionalId, serviceName, timestamp having timestamp < {{timeFromParameter}}L order by timestamp desc limit {{limit}} offset {{offSet}}",
+                        "recordCountQuery":"from adapterRequestTable select count() as count having timestamp < {{timeFromParameter}}L"
+                    },
+                    "publishingInterval":60,
+                    "isPaginationEnable": true
+                }
+            }
+        },
+        "metadata": {
+            "esbUrl": "https://#######:####",
+            "esbContext": "########",
+            "headers": {"Authorization": "Basic ###########",
+                "Access-Control-Allow-Origin": "*"
+            }
+        }
+    }
+}
